@@ -5,7 +5,7 @@ A pipeline for classifying binary dynamics on digraphs using tribes (or closed n
 
 [An application of neighbourhoods in digraphs to the classification of binary dynamics](https://arxiv.org/)
 
-Pedro Conceição, Dejan Govc, Jānis Lazovskis, Ran Levi, Henri Riihimäki, andJason P. Smith
+Pedro Conceição, Dejan Govc, Jānis Lazovskis, Ran Levi, Henri Riihimäki, and Jason P. Smith
 
 
 ### Requirements

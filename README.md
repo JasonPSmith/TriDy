@@ -1,9 +1,14 @@
-# TriDy
+# TriDy: **Tri**bal Classification of Binary ***Dy***namics
+A pipeline for classifying binary dynamics on digraphs using tribes (or closed neighbourhoods), proposed in:
+
+[An application of neighbourhoods in digraphs to the classification of binary dynamics](https://arxiv.org/)
+Pedro Concei\c{c}\~ao, Dejan Govc, J\=anis Lazovskis, Ran Levi, Henri Riihim\"aki, and Jason P. Smith
+
 
 ### Requirements
 Python packages:
-- pyflagsercontain - see https://github.com/JasonPSmith/pyflagsercontain
-- pyflagser - https://github.com/giotto-ai/pyflagser
+- pyflagsercontain - see [here](https://github.com/JasonPSmith/pyflagsercontain)
+- pyflagser - see[here](https://github.com/giotto-ai/pyflagser)
 - pandas
 - numpy
 - subprocess
@@ -18,9 +23,12 @@ Python packages:
 - scipy
 
 ### To run
-Download the spike train data as a numpy file from INSERT (or use your own) and edit the "spike_trains_address" entry in the json file to point to the spike trains.
+Download the spike train data from [here](https://zenodo.org/record/4290212/files/input_data.zip) (or use your own), extract the file into the data folder and then run
+```r
+    (cd data && python extract_data.py)
+```
 
-Edit any other entries in the json file that need changing for your required parameters.
+Edit any entries in the json file that need changing for your required parameters.
 
 Run with
 ```r

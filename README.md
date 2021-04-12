@@ -11,7 +11,7 @@ Pedro Conceição, Dejan Govc, Jānis Lazovskis, Ran Levi, Henri Riihimäki, and
 ### Requirements
 Python packages:
 - pyflagsercontain - see [here](https://github.com/JasonPSmith/pyflagsercontain)
-- pyflagser - see[here](https://github.com/giotto-ai/pyflagser)
+- pyflagser - see [here](https://github.com/giotto-ai/pyflagser)
 - pandas
 - numpy
 - subprocess

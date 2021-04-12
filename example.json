@@ -1,0 +1,21 @@
+{
+  "values":{
+    "number_nbhds": 50,
+    "timebin": 25,
+    "train_set_perc": 0.6,
+    "test_repetitions": 10,
+    "spike_gid_shift": 0,
+    "start_time" : 10,
+    "bin_number" : 2,
+    "feature_parameter": "tribe_size",
+    "selection_parameters": ["tcc", "ccc", "dc2", "dc3", "dc4", "dc5", "dc6", "nbc", "ec", "tribe_size", "rc", "rc_chief",
+				"asg", "asg_low", "asg_radius", "tpsg", "tpsg_low", "tpsg_radius", "tpsg_reversed", "tpsg_reversed_low", "tpsg_reversed_radius",
+				"clsg", "clsg_high", "clsg_radius", "blsg", "blsg_low", "blsg_radius", "blsg_reversed", "blsg_reversed_low", "blsg_reversed_radius"],
+    "feature_gap" : "high",
+    "selection_order" : "high"
+  },
+  "paths":{
+    "spike_trains_address": "./data/spike_trains.npy",
+    "savefolder": "./results/"
+  }
+}

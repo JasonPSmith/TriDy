@@ -1,10 +1,11 @@
 # TriDy
-**Tri**bal Classification of Binary ***Dy***namics
+**Tri**bal Classification of Binary **Dy**namics
 
 A pipeline for classifying binary dynamics on digraphs using tribes (or closed neighbourhoods), proposed in:
 
 [An application of neighbourhoods in digraphs to the classification of binary dynamics](https://arxiv.org/)
-Pedro Concei\c{c}\~ao, Dejan Govc, J\=anis Lazovskis, Ran Levi, Henri Riihim\"aki, and Jason P. Smith
+
+Pedro Conceição, Dejan Govc, Jānis Lazovskis, Ran Levi, Henri Riihimäki, andJason P. Smith
 
 
 ### Requirements

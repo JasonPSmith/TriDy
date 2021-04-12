@@ -38,6 +38,6 @@ Run with
     python ./pipeline.py example.json
 ```
 
-The results of the pipeline will be printed into "./results/classification_accuracies_<parameter>.json", where parameter is the featurisation parameter used.
+The results of the pipeline will be printed into "./results/classification_accuracies_***parameter***.json", where ***parameter*** is the featurisation parameter used.
 
 Note that the example adjacency matrix is large and loaded as a full matrix in the code, using 8GB of memory, as such your system will need more than 8GB of memory to run the pipeline on this dataset.

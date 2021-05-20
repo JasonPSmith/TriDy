@@ -11,6 +11,6 @@ for i in X:
     T[int(i[0]/200)].append(np.array([i[0]%200,i[1]]))
 
 for i in range(len(Y)):
-    output[Y[i]].append(T[i])
+    output[Y[i]].append(np.array(T[i]))
 
 np.save('spike_trains.npy',output)

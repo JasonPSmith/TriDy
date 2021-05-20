@@ -23,7 +23,6 @@ Python packages:
 - scipy
 - pickle
 - time
-- scipy
 
 ### To run
 Download the spike train data from [here](https://zenodo.org/record/4290212/files/input_data.zip) (or use your own), extract the file into the data folder and then run

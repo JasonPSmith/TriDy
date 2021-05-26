@@ -13,13 +13,13 @@ import scipy
 import pickle
 from pyflagsercontain import compute_cell_count
 
-# Load toolbox functions
-exec(open('toolbox.py').read())
-print("\nToolbox loaded")
-
 config_address = sys.argv[1]
 with open(config_address, 'r') as f:
     config_dict = json.load(f)
+
+# Load toolbox functions
+exec(open('toolbox.py').read())
+print("\nToolbox loaded")
 
 # Config
 number_nbhds = config_dict['values']['number_nbhds']                      # The number of top neighboorhoods to consider

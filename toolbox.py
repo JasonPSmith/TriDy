@@ -23,7 +23,7 @@ defined = {'data':{}, 'data_funcs':[], 'helper':[], 'nonspectral_params':{}, 'sp
 dir_export = config_dict['paths']['export_address']
 
 # Load adjacency matrix
-print('Loading mc2 circuit',flush=True)
+print('Loading circuit',flush=True)
 adj = load_npz(config_dict['paths']['matrix_address']).toarray().astype(int)
 defined['data']['adj'] = 'adjacency matrix'
 
@@ -643,7 +643,7 @@ if config_dict['values']['recompute'] == "True":
         print('ERROR: the folder '+dir_export+'individual_parameters/ does not exist')
     if not os.path.exists(dir_export+'individual_parameters_errors/'):
         print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
-    for k in param_names:
+    for feature_parameter in param_names:
                     if feature_parameter == "ec":
                         recompute_single(euler_characteristic)
                     elif feature_parameter == "tribe_size":

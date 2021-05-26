@@ -645,41 +645,41 @@ if config_dict['values']['recompute'] == "True":
         print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
     for feature_parameter in param_names:
                     if feature_parameter == "ec":
-                        recompute_single(euler_characteristic)
+                        recompute_single(euler_characteristic, feature_parameter)
                     elif feature_parameter == "tribe_size":
-                        recompute_single(tribe_size)
+                        recompute_single(tribe_size, feature_parameter)
                     elif feature_parameter == "deg":
-                        recompute_single(degree)
+                        recompute_single(degree, feature_parameter)
                     elif feature_parameter == "in_deg":
-                        recompute_single(in_degree)
+                        recompute_single(in_degree, feature_parameter)
                     elif feature_parameter == "out_deg":
-                        recompute_single(out_degree)
+                        recompute_single(out_degree, feature_parameter)
                     elif feature_parameter == "rc":
-                        recompute_single(reciprocal_connections)
+                        recompute_single(reciprocal_connections, feature_parameter)
                     elif feature_parameter == "rc_chief":
-                        recompute_single(reciprocal_connections, chief_only=True)
+                        recompute_single(reciprocal_connections, feature_parameter, chief_only=True)
                     elif feature_parameter == "tcc":
-                        recompute_single(tcc)
+                        recompute_single(tcc, feature_parameter)
                     elif feature_parameter == "ccc":
-                        recompute_single(ccc)
+                        recompute_single(ccc, feature_parameter)
                     elif feature_parameter == "asg":
-                        recompute_single(asg)
+                        recompute_single(asg, feature_parameter)
                     elif feature_parameter[:4] == "tpsg":
                         if feature_parameter.count('_') == 2:
-                            recompute_single(tpsg, in_deg=True, gap=feature_parameter[-4:])
+                            recompute_single(tpsg, feature_parameter, in_deg=True, gap=feature_parameter[-4:])
                         else:
-                            recompute_single(tpsg, gap=feature_parameter[-4:])
+                            recompute_single(tpsg, feature_parameter, gap=feature_parameter[-4:])
                     elif feature_parameter[:4] == "clsg":
-                        recompute_single(clsg, gap=feature_parameter[-4:])
+                        recompute_single(clsg, feature_parameter, gap=feature_parameter[-4:])
                     elif feature_parameter[:4] == "blsg":
                         if feature_parameter.count('_') == 2:
-                            recompute_single(blsg, reverse_flow=True, gap=feature_parameter[-4:])
+                            recompute_single(blsg, feature_parameter, reverse_flow=True, gap=feature_parameter[-4:])
                         else:
-                            recompute_single(blsg, gap=feature_parameter[-4:])
+                            recompute_single(blsg, feature_parameter, gap=feature_parameter[-4:])
                     elif feature_parameter == "nbc":
-                        recompute_single(nbc)
+                        recompute_single(nbc, feature_parameter)
                     elif feature_parameter[:2] == "dc":
-                        recompute_single(dc, coeff_index=int(feature_parameter[2]))
+                        recompute_single(dc, feature_parameter, coeff_index=int(feature_parameter[2]))
 
 
 # Load the computed parameters into a dataframe

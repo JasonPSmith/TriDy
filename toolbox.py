@@ -652,12 +652,12 @@ param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]
 df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
 defined['data']['df'] = 'mc2 parameters'
 
-biedge_data = {name:np.load(dir_export+'biedge_parameters/'+name+'.npy') for name in biedge_dict.keys()}
-df4 = pd.DataFrame(data = biedge_data)
-defined['data']['df4'] = 'biedge counts and derived values'
-
-df = pd.concat([df,df4],axis=1)
-defined['data']['df'] = 'mc2 and biedge paramaters'
+# biedge_data = {name:np.load(dir_export+'biedge_parameters/'+name+'.npy') for name in biedge_dict.keys()}
+# df4 = pd.DataFrame(data = biedge_data)
+# defined['data']['df4'] = 'biedge counts and derived values'
+#
+# df = pd.concat([df,df4],axis=1)
+# defined['data']['df'] = 'mc2 and biedge parameters'
 
 
 

@@ -17,7 +17,7 @@
   },
   "paths":{
     "matrix_address": "./data/mc2.npz",
-    "export_address": "./data/"
+    "export_address": "./data/",
     "spike_trains_address": "./data/spike_trains.npy",
     "savefolder": "./results/"
   }

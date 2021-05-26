@@ -55,27 +55,6 @@ param_dict_inverse = {v: k for k, v in param_dict.items()}
 # Load the parameters to be considered
 param_names = config_dict['values']['selection_parameters']
 
-# Compute the parameters if not use precomputed ones
-if config_dict['values']['recompute'] == "True":
-    if not os.path.exists(dir_export+'individual_parameters/'):
-        print('ERROR: the folder '+dir_export+'individual_parameters/ does not exist')
-    if not os.path.exists(dir_export+'individual_parameters_errors/'):
-        print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
-    for k in param_names:
-        recompute_single(param_dict_inverse[k], k)
-
-
-# Load the computed parameters into a dataframe
-param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_names]
-df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
-defined['data']['df'] = 'mc2 parameters'
-
-biedge_data = {name:np.load(dir_export+'biedge_parameters/'+name+'.npy') for name in biedge_dict.keys()}
-df4 = pd.DataFrame(data = biedge_data)
-defined['data']['df4'] = 'biedge counts and derived values'
-
-df = pd.concat([df,df4],axis=1)
-defined['data']['df'] = 'mc2 and biedge paramaters'
 
 
 print('Loading functions',flush=True)
@@ -651,6 +630,35 @@ def bls_matrix(matrix, reverse_flow=False):
     #return np.subtract(np.eye(len(non_quasi_isolated),dtype=int),np.matmul(inv(matrix_D),matrix_W))
     current_size = len(matrix)
     return np.subtract(np.eye(current_size,dtype='float64'),tps_matrix(matrix, in_deg=(not reverse_flow)))
+
+
+
+##
+## Load the parameters
+##
+
+# Compute the parameters if not use precomputed ones
+if config_dict['values']['recompute'] == "True":
+    if not os.path.exists(dir_export+'individual_parameters/'):
+        print('ERROR: the folder '+dir_export+'individual_parameters/ does not exist')
+    if not os.path.exists(dir_export+'individual_parameters_errors/'):
+        print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
+    for k in param_names:
+        recompute_single(param_dict_inverse[k], k)
+
+
+# Load the computed parameters into a dataframe
+param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_names]
+df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
+defined['data']['df'] = 'mc2 parameters'
+
+biedge_data = {name:np.load(dir_export+'biedge_parameters/'+name+'.npy') for name in biedge_dict.keys()}
+df4 = pd.DataFrame(data = biedge_data)
+defined['data']['df4'] = 'biedge counts and derived values'
+
+df = pd.concat([df,df4],axis=1)
+defined['data']['df'] = 'mc2 and biedge paramaters'
+
 
 
 ##

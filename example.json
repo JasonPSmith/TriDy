@@ -12,9 +12,12 @@
 				"asg", "asg_low", "asg_radius", "tpsg", "tpsg_low", "tpsg_radius", "tpsg_reversed", "tpsg_reversed_low", "tpsg_reversed_radius",
 				"clsg", "clsg_high", "clsg_radius", "blsg", "blsg_low", "blsg_radius", "blsg_reversed", "blsg_reversed_low", "blsg_reversed_radius"],
     "feature_gap" : "high",
-    "selection_order" : "high"
+    "selection_order" : "high",
+    "recompute" : "True"
   },
   "paths":{
+    "matrix_address": "./data/mc2.npz",
+    "export_address": "./data/"
     "spike_trains_address": "./data/spike_trains.npy",
     "savefolder": "./results/"
   }

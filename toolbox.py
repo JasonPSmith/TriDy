@@ -20,19 +20,16 @@ from pyflagsercontain import compute_cell_count
 defined = {'data':{}, 'data_funcs':[], 'helper':[], 'nonspectral_params':{}, 'spectral_params':{}}
 
 # Set working directories
-dir_export = './data/'
+dir_export = config_dict['paths']['export_address']
 
-# Load mc2 circuit
+# Load adjacency matrix
 print('Loading mc2 circuit',flush=True)
-#adj_dir = '/uoa/scratch/shared/mathematics/neurotopology/tribes-data-old/sparse-format/'
-adj = load_npz(dir_export+'mc2.npz').toarray().astype(int)
-defined['data']['adj'] = 'mc2 adjacency matrix'
-#adj_length = len(adj)
-#defined['data']['adj_length'] = 'dimension of mc2 adjacency matrix'
+adj = load_npz(config_dict['paths']['matrix_address']).toarray().astype(int)
+defined['data']['adj'] = 'adjacency matrix'
 
 
-# Combine mc2 new and old paramaters
-print('Loading computed paramaters',flush=True)
+# Dictionary of all parameters which can be considered
+print('Loading parameters',flush=True)
 param_dict = {
     'tcc':'tcc', 'ccc':'ccc',
     'dc2':'dc2', 'dc3':'dc3', 'dc4':'dc4', 'dc5':'dc5', 'dc6':'dc6',
@@ -43,26 +40,43 @@ param_dict = {
     'tpsg_reversed_high':'tpsg_reversed', 'tpsg_reversed_low':'tpsg_reversed_low', 'tpsg_reversed_radius':'tpsg_reversed_radius',
     'clsg_low':'clsg', 'clsg_high':'clsg_high', 'clsg_radius':'clsg_radius',
     'blsg_high':'blsg', 'blsg_low':'blsg_low', 'blsg_radius':'blsg_radius',
-    'blsg_reversed_high':'blsg_reversed', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius'
+    'blsg_reversed_high':'blsg_reversed', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius',
 }
+biedge_dict = {
+    'biedges1t': 'biedges1t', 'biedges2t': 'biedges2t', 'biedges3t': 'biedges3t', 'biedges4t': 'biedges4t', 'biedges5t': 'biedges5t', 'biedges6t': 'biedges6t',
+    'biedges1f': 'biedges1f', 'biedges2f': 'biedges2f', 'biedges3f': 'biedges3f', 'biedges4f': 'biedges4f', 'biedges5f': 'biedges5f', 'biedges6f': 'biedges6f',
+    'beulert': 'beulert', 'beulerf': 'beulerf', 'nbict': 'nbict', 'nbicf': 'nbicf'
+}
+param_dict.update(biedge_dict)
 #param_dict_random = {'random_float_'+str(i).zfill(2):'randf'+str(i) for i in range(20)}
 #param_dict.update(param_dict_random)
+param_dict_inverse = {v: k for k, v in param_dict.items()}
 
-print('hi1')
+# Load the parameters to be considered
+param_names = config_dict['values']['selection_parameters']
 
-param_files = [np.load(dir_export+'individual_parameters/'+f+'.npy') for f in param_dict.keys()]
-param_names = [param_dict[k] for k in param_dict.keys()]
+# Compute the parameters if not use precomputed ones
+if config_dict['values']['recompute'] == "True":
+    if not os.path.exists(dir_export+'individual_parameters/'):
+        print('ERROR: the folder '+dir_export+'individual_parameters/ does not exist')
+    if not os.path.exists(dir_export+'individual_parameters_errors/'):
+        print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
+    for k in param_names:
+        recompute_single(param_dict_inverse[k], k)
+
+
+# Load the computed parameters into a dataframe
+param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_names]
 df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
-defined['data']['df'] = 'mc2 paramaters'
+defined['data']['df'] = 'mc2 parameters'
 
-df1 = pd.read_pickle(dir_export+'simplex_count_containing_chief.pkl')
-defined['data']['df1'] = 'simplex containment of chief in each tribe'
+biedge_data = {name:np.load(dir_export+'biedge_parameters/'+name+'.npy') for name in biedge_dict.keys()}
+df4 = pd.DataFrame(data = biedge_data)
+defined['data']['df4'] = 'biedge counts and derived values'
 
-df2 = pd.read_pickle(dir_export+'simplex_count_in_tribe.pkl')
-defined['data']['df2'] = 'simplex count in each tribe'
+df = pd.concat([df,df4],axis=1)
+defined['data']['df'] = 'mc2 and biedge paramaters'
 
-df3 = pd.read_pickle(dir_export+'tribe_betti_numbers.pkl')
-defined['data']['df3'] = 'betti numbers of each tribe'
 
 print('Loading functions',flush=True)
 
@@ -104,6 +118,7 @@ def recompute_single(function, name, **args):
     print(' done.\nSaving error array in toolbox_mc2data/individual_parameters_errors/'+name+'.npy ... ', flush=True, end='')
     np.save(dir_export+'individual_parameters_errors/'+name+'.npy',np.array(data_error,dtype='int8'))
     print(' done.',flush=True)
+
 
 
 defined['data_funcs'].append('random_values(value_type=\'float\', value_min=0, value_max=1, name=\'random_float_00\')')
@@ -364,16 +379,13 @@ def tcc(chief_index):
     current_tribe = tribe(chief_index)
     return tcc_adjacency(current_tribe, index=chief_index)
 
-defined['nonspectral_params']['tcc'].append('tcc_adjacency(matrix, index=0, recompute=False)')
-def tcc_adjacency(matrix, index=0, recompute=False):
+defined['nonspectral_params']['tcc'].append('tcc_adjacency(matrix, index=0')
+def tcc_adjacency(matrix, index=0):
     outdeg = np.count_nonzero(matrix[0])
     indeg = np.count_nonzero(np.transpose(matrix)[0])
     repdeg = reciprocal_connections_adjacency(matrix, chief_only=True)
     totdeg = indeg+outdeg
-    if recompute:
-        chief_containment = cell_count_at_v0(matrix)
-    else:
-        chief_containment = list(df1.loc[index])
+    chief_containment = cell_count_at_v0(matrix)
     numerator = 0 if len(chief_containment) < 3 else chief_containment[2]
     return numerator/(totdeg*(totdeg-1)-(indeg*outdeg+repdeg))
 
@@ -400,22 +412,19 @@ def ccc_adjacency(matrix):
 # source: manuscript
 defined['nonspectral_params']['dc']=[]
 
-defined['nonspectral_params']['dc'].append('dc(chief_index, coeff_index=2, recompute=False)')
-def dc(chief_index, coeff_index=2, recompute=False):
+defined['nonspectral_params']['dc'].append('dc(chief_index, coeff_index=2)')
+def dc(chief_index, coeff_index=2):
 #  in: index
 # out: float
     current_tribe = tribe(chief_index)
-    return dc_adjacency(current_tribe, chief_index=chief_index, coeff_index=coeff_index, recompute=recompute)
+    return dc_adjacency(current_tribe, chief_index=chief_index, coeff_index=coeff_index)
 
-defined['nonspectral_params']['dc'].append('dc_adjacency(matrix, chief_index=0, coeff_index=2, recompute=False)')
-def dc_adjacency(matrix, chief_index=0, coeff_index=2, recompute=False):
+defined['nonspectral_params']['dc'].append('dc_adjacency(matrix, chief_index=0, coeff_index=2)')
+def dc_adjacency(matrix, chief_index=0, coeff_index=2):
 #  in: tribe matrix
 # out: float
     assert coeff_index >= 2, 'Assertion error: Density coefficient must be at least 2'
-    if recompute:
-        flagser_output = cell_count_at_v0(matrix)
-    else:
-        flagser_output = list(df1.loc[chief_index])
+    flagser_output = cell_count_at_v0(matrix)
     if len(flagser_output) <= coeff_index:
         density_coeff = 0
     elif flagser_output[coeff_index] == 0:
@@ -431,24 +440,20 @@ def dc_adjacency(matrix, chief_index=0, coeff_index=2, recompute=False):
 # source: manuscript
 defined['nonspectral_params']['nbc']=[]
 
-defined['nonspectral_params']['nbc'].append('nbc(chief_index, recompute=False)')
-def nbc(chief_index, recompute=False):
+defined['nonspectral_params']['nbc'].append('nbc(chief_index)')
+def nbc(chief_index):
 #  in: index
 # out: float
     current_tribe = tribe(chief_index)
-    return nbc_adjacency(current_tribe, chief_index=chief_index, recompute=recompute)
+    return nbc_adjacency(current_tribe, chief_index=chief_index)
 
-defined['nonspectral_params']['nbc'].append('nbc_adjacency(matrix, chief_index=0, recompute=False)')
-def nbc_adjacency(matrix, chief_index=0, recompute=False):
+defined['nonspectral_params']['nbc'].append('nbc_adjacency(matrix, chief_index=0)')
+def nbc_adjacency(matrix, chief_index=0):
 #  in: tribe matrix
 # out: float
-    if recompute:
-        flagser_output = pyflagser.flagser_unweighted(matrix, directed=True)
-        cells = flagser_output['cell_count']
-        bettis = flagser_output['betti']
-    else:
-        cells = list(df2.loc[chief_index])
-        bettis = list(df3.loc[chief_index])
+    flagser_output = pyflagser.flagser_unweighted(matrix, directed=True)
+    cells = flagser_output['cell_count']
+    bettis = flagser_output['betti']
     while (cells[-1] == 0) and (len(cells) > 1):
         cells = cells[:-1]
     while (bettis[-1] == 0) and (len(bettis) > 1):
@@ -677,3 +682,4 @@ if __name__ == "__main__":
             print('     '+f,flush=True)
         print('\n',end='',flush=True)
     print(sep,flush=True)
+    if

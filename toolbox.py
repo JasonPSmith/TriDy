@@ -42,12 +42,24 @@ param_dict = {
     'blsg_high':'blsg', 'blsg_low':'blsg_low', 'blsg_radius':'blsg_radius',
     'blsg_reversed_high':'blsg_reversed', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius',
 }
-biedge_dict = {
-    'biedges1t': 'biedges1t', 'biedges2t': 'biedges2t', 'biedges3t': 'biedges3t', 'biedges4t': 'biedges4t', 'biedges5t': 'biedges5t', 'biedges6t': 'biedges6t',
-    'biedges1f': 'biedges1f', 'biedges2f': 'biedges2f', 'biedges3f': 'biedges3f', 'biedges4f': 'biedges4f', 'biedges5f': 'biedges5f', 'biedges6f': 'biedges6f',
-    'beulert': 'beulert', 'beulerf': 'beulerf', 'nbict': 'nbict', 'nbicf': 'nbicf'
+function_dict = {
+    'tcc':tcc, 'ccc':ccc,
+    'dc2':dc2, 'dc3':'dc3', 'dc4':'dc4', 'dc5':'dc5', 'dc6':'dc6',
+    'nbc':nbc,'euler_characteristic':euler_characteristic,
+    'tribe_size':tribe_size, 'degree':degree, 'in_degree':in_degree, 'out_degree':out_degree, 'reciprocal_connections':reciprocal_connections, 'reciprocal_connections_chief':reciprocal_connections_chief,
+    'asg_high':'asg', 'asg_low':'asg_low', 'asg_radius':'asg_radius',
+    'tpsg_high':'tpsg', 'tpsg_low':'tpsg_low', 'tpsg_radius':'tpsg_radius',
+    'tpsg_reversed_high':'tpsg_reversed', 'tpsg_reversed_low':'tpsg_reversed_low', 'tpsg_reversed_radius':'tpsg_reversed_radius',
+    'clsg_low':'clsg', 'clsg_high':'clsg_high', 'clsg_radius':'clsg_radius',
+    'blsg_high':'blsg', 'blsg_low':'blsg_low', 'blsg_radius':'blsg_radius',
+    'blsg_reversed_high':'blsg_reversed', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius',
 }
-param_dict.update(biedge_dict)
+# biedge_dict = {
+#     'biedges1t': 'biedges1t', 'biedges2t': 'biedges2t', 'biedges3t': 'biedges3t', 'biedges4t': 'biedges4t', 'biedges5t': 'biedges5t', 'biedges6t': 'biedges6t',
+#     'biedges1f': 'biedges1f', 'biedges2f': 'biedges2f', 'biedges3f': 'biedges3f', 'biedges4f': 'biedges4f', 'biedges5f': 'biedges5f', 'biedges6f': 'biedges6f',
+#     'beulert': 'beulert', 'beulerf': 'beulerf', 'nbict': 'nbict', 'nbicf': 'nbicf'
+# }
+#param_dict.update(biedge_dict)
 #param_dict_random = {'random_float_'+str(i).zfill(2):'randf'+str(i) for i in range(20)}
 #param_dict.update(param_dict_random)
 param_dict_inverse = {v: k for k, v in param_dict.items()}
@@ -90,11 +102,11 @@ def recompute_single(function, name, **args):
     cmd_out = cmd.communicate()[0].decode('utf-8')
     if cmd_out != '':
         tag = round(time.time())
-        print('Parameter already computed, backing up as toolbox_mc2data/individual_parameters_previous/'+name+'_'+str(tag)+'.npy', flush=True)
+        print('Parameter already computed, backing up as '+dir_export+'/individual_parameters_previous/'+name+'_'+str(tag)+'.npy', flush=True)
         subprocess.run(['mv', dir_export+'individual_parameters/'+name+'.npy', dir_export+'individual_parameters_previous/'+name+'_'+str(tag)+'.npy'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print('Saving params in toolbox_mc2data/individual_parameters/'+name+'.npy ... ', flush=True, end='')
+    print('Saving params in '+dir_export+'/individual_parameters/'+name+'.npy ... ', flush=True, end='')
     np.save(dir_export+'individual_parameters/'+name+'.npy',np.array(data))
-    print(' done.\nSaving error array in toolbox_mc2data/individual_parameters_errors/'+name+'.npy ... ', flush=True, end='')
+    print(' done.\nSaving error array in '+dir_export+'/individual_parameters_errors/'+name+'.npy ... ', flush=True, end='')
     np.save(dir_export+'individual_parameters_errors/'+name+'.npy',np.array(data_error,dtype='int8'))
     print(' done.',flush=True)
 
@@ -644,7 +656,42 @@ if config_dict['values']['recompute'] == "True":
     if not os.path.exists(dir_export+'individual_parameters_errors/'):
         print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
     for k in param_names:
-        recompute_single(param_dict_inverse[k], k)
+                    if feature_parameter == "ec":
+                        recompute_single(euler_characteristic)
+                    elif feature_parameter == "tribe_size":
+                        recompute_single(tribe_size)
+                    elif feature_parameter == "deg":
+                        recompute_single(degree)
+                    elif feature_parameter == "in_deg":
+                        recompute_single(in_degree)
+                    elif feature_parameter == "out_deg":
+                        recompute_single(out_degree)
+                    elif feature_parameter == "rc":
+                        recompute_single(reciprocal_connections)
+                    elif feature_parameter == "rc_chief":
+                        recompute_single(reciprocal_connections, chief_only=True)
+                    elif feature_parameter == "tcc":
+                        recompute_single(tcc)
+                    elif feature_parameter == "ccc":
+                        recompute_single(ccc)
+                    elif feature_parameter == "asg":
+                        recompute_single(asg)
+                    elif feature_parameter[:4] == "tpsg":
+                        if feature_parameter.count('_') == 2:
+                            recompute_single(tpsg, in_deg=True, gap=feature_parameter[-4:])
+                        else:
+                            recompute_single(tpsg, gap=feature_parameter[-4:])
+                    elif feature_parameter[:4] == "clsg":
+                        recompute_single(clsg, gap=feature_parameter[-4:])
+                    elif feature_parameter[:4] == "blsg":
+                        if feature_parameter.count('_') == 2:
+                            recompute_single(blsg, reverse_flow=True, gap=feature_parameter[-4:])
+                        else:
+                            recompute_single(blsg, gap=feature_parameter[-4:])
+                    elif feature_parameter == "nbc":
+                        recompute_single(nbc)
+                    elif feature_parameter[:2] == "dc":
+                        recompute_single(dc, coeff_index=int(feature_parameter[2]))
 
 
 # Load the computed parameters into a dataframe

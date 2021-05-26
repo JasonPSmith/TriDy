@@ -87,7 +87,7 @@ def computeFeature(nhbds_for_featurization, contains_chief, feature_tracker, mat
             elif feature_parameter == "rc_chief":
                 x = reciprocal_connections_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], chief_only=True)
             elif feature_parameter == "tcc":
-                x = tcc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], recompute=True) if contains_chief[i] else 0
+                x = tcc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])]) if contains_chief[i] else 0
             elif feature_parameter == "ccc":
                 x = ccc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])])
             elif feature_parameter == "asg":
@@ -103,9 +103,9 @@ def computeFeature(nhbds_for_featurization, contains_chief, feature_tracker, mat
             elif feature_parameter == "blsg_reversed":
                 x = blsg_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], reverse_flow=True, gap=feature_gap)
             elif feature_parameter == "nbc":
-                x = nbc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], recompute=True)
+                x = nbc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])])
             elif feature_parameter[:2] == "dc":
-                x = dc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], coeff_index=int(feature_parameter[2]), recompute=True) if contains_chief[i] else 0
+                x = dc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], coeff_index=int(feature_parameter[2])) if contains_chief[i] else 0
             elif feature_parameter == "binary":
                 x = 1 if contains_chief[i] else 0
         except Exception as e:

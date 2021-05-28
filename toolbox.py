@@ -540,6 +540,13 @@ def tpsg(chief_index, in_deg=False, gap='high'):
     current_tribe = tribe(chief_index)
     return tpsg_adjacency(current_tribe, in_deg=in_deg, gap=gap)
 
+defined['spectral_params']['tpsg'].append('tpsg_radius(chief_index, in_deg=False)')
+def tpsg_radius(chief_index, in_deg=False):
+#  in: index
+# out: float
+    return spectrum_param(spectrum_make(tps_matrix(tribe(index), in_deg=in_deg)),'radius')
+
+
 defined['spectral_params']['tpsg'].append('tpsg_adjacency(matrix, in_deg=False, gap=\'high\')')
 def tpsg_adjacency(matrix, in_deg=False, gap='high'):
 #  in: tribe matrix
@@ -571,6 +578,12 @@ def clsg(chief_index, gap='low'):
 # out: float
     current_tribe = tribe(chief_index)
     return clsg_adjacency(current_tribe, is_strongly_conn=False, gap=gap)
+
+defined['spectral_params']['clsg'].append('clsg_radius(chief_index)')
+def clsg_radius(chief_index, gap='low'):
+#  in: index
+# out: float
+    return spectrum_param(spectrum_make(cls_matrix_fromadjacency(tribe(index))),'radius')
 
 defined['spectral_params']['clsg'].append('clsg_adjacency(matrix, is_strongly_conn=False, gap=\'low\')')
 def clsg_adjacency(matrix, is_strongly_conn=False, gap='low'):
@@ -620,6 +633,12 @@ def blsg(chief_index, reverse_flow=False, gap='high'):
 # out: float
     current_tribe = tribe(chief_index)
     return blsg_adjacency(current_tribe, reverse_flow=reverse_flow, gap=gap)
+
+defined['spectral_params']['blsg'].append('blsg_radius(chief_index, reverse_flow=False)')
+def blsg_radius(chief_index, reverse_flow=False):
+#  in: index
+# out: float
+    return spectrum_param(spectrum_make(bls_matrix(tribe(index),reverse_flow=reverse_flow)),'radius')
 
 defined['spectral_params']['blsg'].append('blsg_adjacency(matrix, reverse_flow=False, gap=\'high\')')
 def blsg_adjacency(matrix, reverse_flow=False, gap='high'):
@@ -674,16 +693,31 @@ if config_dict['values']['recompute'] == "True":
                         recompute_single(asg, feature_parameter)
                     elif feature_parameter[:4] == "tpsg":
                         if feature_parameter.count('_') == 2:
-                            recompute_single(tpsg, feature_parameter, in_deg=True, gap=feature_parameter[-4:])
+                            if feature_parameter[14:] == 'radius':
+                                recompute_single(tpsg_radius, feature_parameter, in_deg=True)
+                            else:
+                                recompute_single(tpsg, feature_parameter, in_deg=True, gap=feature_parameter[14:])
                         else:
-                            recompute_single(tpsg, feature_parameter, gap=feature_parameter[-4:])
+                            if feature_parameter[5:] == 'radius':
+                                recompute_single(tpsg_radius, feature_parameter)
+                            else:
+                                recompute_single(tpsg, feature_parameter, gap=feature_parameter[5:])
                     elif feature_parameter[:4] == "clsg":
-                        recompute_single(clsg, feature_parameter, gap=feature_parameter[-4:])
+                        if feature_parameter[5:] == "radius":
+                            recompute_single(clsg_radius, feature_parameter)
+                        else:
+                            recompute_single(clsg, feature_parameter, gap=feature_parameter[5:])
                     elif feature_parameter[:4] == "blsg":
                         if feature_parameter.count('_') == 2:
-                            recompute_single(blsg, feature_parameter, reverse_flow=True, gap=feature_parameter[-4:])
+                            if feature_parameter[14:] == 'radius':
+                                recompute_single(blsg_radius, feature_parameter, reverse_flow=True)
+                            else:
+                                recompute_single(blsg, feature_parameter, reverse_flow=True, gap=feature_parameter[14:])
                         else:
-                            recompute_single(blsg, feature_parameter, gap=feature_parameter[-4:])
+                            if feature_parameter[5:] == 'radius':
+                                recompute_single(blsg_radius, feature_parameter)
+                            else:
+                                recompute_single(blsg, feature_parameter, gap=feature_parameter[5:])
                     elif feature_parameter == "nbc":
                         recompute_single(nbc, feature_parameter)
                     elif feature_parameter[:2] == "dc":

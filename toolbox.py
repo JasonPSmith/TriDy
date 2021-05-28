@@ -366,7 +366,10 @@ def tcc_adjacency(matrix, index=0):
     totdeg = indeg+outdeg
     chief_containment = cell_count_at_v0(matrix)
     numerator = 0 if len(chief_containment) < 3 else chief_containment[2]
-    return numerator/(totdeg*(totdeg-1)-(indeg*outdeg+repdeg))
+    denominator = (totdeg*(totdeg-1)-(indeg*outdeg+repdeg))
+    if denominator == 0:
+        return 0
+    return numerator/denominator
 
 
 # classical clustering coefficient
@@ -384,6 +387,8 @@ def ccc_adjacency(matrix):
     current_size = len(matrix)
     numerator = np.linalg.matrix_power(matrix+np.transpose(matrix),3)[0][0]
     denominator = 2*(deg*(deg-1)-2*reciprocal_connections_adjacency(matrix, chief_only=True))
+    if denominator == 0:
+        return 0
     return numerator/denominator
 
 
@@ -411,7 +416,10 @@ def dc_adjacency(matrix, chief_index=0, coeff_index=2):
     else:
         numerator = coeff_index*flagser_output[coeff_index]
         denominator = (coeff_index+1)*(len(matrix)-coeff_index)*flagser_output[coeff_index-1]
-        density_coeff = numerator/denominator
+        if denominator == 0:
+            density_coeff = 0
+        else:
+            density_coeff = numerator/denominator
     return density_coeff
 
 

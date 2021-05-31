@@ -531,6 +531,12 @@ def asg(chief_index, gap='high'):
     current_tribe = tribe(chief_index)
     return asg_adjacency(current_tribe, gap=gap)
 
+defined['spectral_params']['asg'].append('asg_radius(chief_index, in_deg=False)')
+def asg_radius(index, in_deg=False):
+#  in: index
+# out: float
+    return spectrum_param(spectrum_make(tribe(index)),'radius')
+
 defined['spectral_params']['asg'].append('asg_adjacency(matrix, gap=\'high\')')
 def asg_adjacency(matrix, gap='high'):
     return spectral_gap(matrix, param=gap)
@@ -547,7 +553,7 @@ def tpsg(chief_index, in_deg=False, gap='high'):
     return tpsg_adjacency(current_tribe, in_deg=in_deg, gap=gap)
 
 defined['spectral_params']['tpsg'].append('tpsg_radius(chief_index, in_deg=False)')
-def tpsg_radius(chief_index, in_deg=False):
+def tpsg_radius(index, in_deg=False):
 #  in: index
 # out: float
     return spectrum_param(spectrum_make(tps_matrix(tribe(index), in_deg=in_deg)),'radius')
@@ -586,7 +592,7 @@ def clsg(chief_index, gap='low'):
     return clsg_adjacency(current_tribe, is_strongly_conn=False, gap=gap)
 
 defined['spectral_params']['clsg'].append('clsg_radius(chief_index)')
-def clsg_radius(chief_index, gap='low'):
+def clsg_radius(index, gap='low'):
 #  in: index
 # out: float
     return spectrum_param(spectrum_make(cls_matrix_fromadjacency(tribe(index))),'radius')
@@ -641,7 +647,7 @@ def blsg(chief_index, reverse_flow=False, gap='high'):
     return blsg_adjacency(current_tribe, reverse_flow=reverse_flow, gap=gap)
 
 defined['spectral_params']['blsg'].append('blsg_radius(chief_index, reverse_flow=False)')
-def blsg_radius(chief_index, reverse_flow=False):
+def blsg_radius(index, reverse_flow=False):
 #  in: index
 # out: float
     return spectrum_param(spectrum_make(bls_matrix(tribe(index),reverse_flow=reverse_flow)),'radius')
@@ -695,8 +701,11 @@ if config_dict['values']['recompute'] == "True":
                         recompute_single(tcc, feature_parameter)
                     elif feature_parameter == "ccc":
                         recompute_single(ccc, feature_parameter)
-                    elif feature_parameter == "asg":
-                        recompute_single(asg, feature_parameter)
+                    elif feature_parameter[:3] == "asg":
+                        if feature_parameter[4:] == "radius":
+                            recompute_single(asg_radius, feature_parameter)
+                        else:
+                            recompute_single(asg, feature_parameter, gap=feature_parameter[4:])
                     elif feature_parameter[:4] == "tpsg":
                         if feature_parameter.count('_') == 2:
                             if feature_parameter[14:] == 'radius':

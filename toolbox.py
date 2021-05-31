@@ -287,6 +287,12 @@ def cell_count_at_v0(matrix):
     simplexcontainment = compute_cell_count(matrix.shape[0], np.transpose(np.array(np.nonzero(matrix))))
     return simplexcontainment[0]
 
+defined['helper'].append('euler_characteristic_chief(chief)')
+def euler_characteristic_chief(chief):
+#  In: index
+# Out: integer
+    return euler_characteristic(tribe(chief))
+
 defined['helper'].append('euler_characteristic(matrix)')
 def euler_characteristic(matrix):
 #  In: adjacency matrix
@@ -672,7 +678,7 @@ if config_dict['values']['recompute'] == "True":
         print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
     for feature_parameter in param_names:
                     if feature_parameter == "ec":
-                        recompute_single(euler_characteristic, feature_parameter)
+                        recompute_single(euler_characteristic_chief, feature_parameter)
                     elif feature_parameter == "tribe_size":
                         recompute_single(tribe_size, feature_parameter)
                     elif feature_parameter == "deg":

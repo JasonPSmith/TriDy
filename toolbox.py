@@ -684,63 +684,63 @@ if config_dict['values']['recompute'] == "True":
         print('ERROR: the folder '+dir_export+'individual_parameters_errors/ does not exist')
     for feature_parameter in param_names:
                     if feature_parameter == "ec":
-                        recompute_single(euler_characteristic_chief, feature_parameter)
+                        recompute_single(euler_characteristic_chief, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "tribe_size":
-                        recompute_single(tribe_size, feature_parameter)
+                        recompute_single(tribe_size, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "deg":
-                        recompute_single(degree, feature_parameter)
+                        recompute_single(degree, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "in_deg":
-                        recompute_single(in_degree, feature_parameter)
+                        recompute_single(in_degree, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "out_deg":
-                        recompute_single(out_degree, feature_parameter)
+                        recompute_single(out_degree, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "rc":
-                        recompute_single(reciprocal_connections, feature_parameter)
+                        recompute_single(reciprocal_connections, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "rc_chief":
-                        recompute_single(reciprocal_connections, feature_parameter, chief_only=True)
+                        recompute_single(reciprocal_connections, param_dict_inverse[feature_parameter], chief_only=True)
                     elif feature_parameter == "tcc":
-                        recompute_single(tcc, feature_parameter)
+                        recompute_single(tcc, param_dict_inverse[feature_parameter])
                     elif feature_parameter == "ccc":
-                        recompute_single(ccc, feature_parameter)
+                        recompute_single(ccc, param_dict_inverse[feature_parameter])
                     elif feature_parameter[:3] == "asg":
                         if feature_parameter[4:] == "radius":
-                            recompute_single(asg_radius, feature_parameter)
+                            recompute_single(asg_radius, param_dict_inverse[feature_parameter])
                         else:
-                            recompute_single(asg, feature_parameter, gap=feature_parameter[4:])
+                            recompute_single(asg, param_dict_inverse[feature_parameter], gap=feature_parameter[4:])
                     elif feature_parameter[:4] == "tpsg":
                         if feature_parameter.count('_') == 2:
                             if feature_parameter[14:] == 'radius':
-                                recompute_single(tpsg_radius, feature_parameter, in_deg=True)
+                                recompute_single(tpsg_radius, param_dict_inverse[feature_parameter], in_deg=True)
                             else:
-                                recompute_single(tpsg, feature_parameter, in_deg=True, gap=feature_parameter[14:])
+                                recompute_single(tpsg, param_dict_inverse[feature_parameter], in_deg=True, gap=feature_parameter[14:])
                         else:
                             if feature_parameter[5:] == 'radius':
-                                recompute_single(tpsg_radius, feature_parameter)
+                                recompute_single(tpsg_radius, param_dict_inverse[feature_parameter])
                             else:
-                                recompute_single(tpsg, feature_parameter, gap=feature_parameter[5:])
+                                recompute_single(tpsg, param_dict_inverse[feature_parameter], gap=feature_parameter[5:])
                     elif feature_parameter[:4] == "clsg":
                         if feature_parameter[5:] == "radius":
-                            recompute_single(clsg_radius, feature_parameter)
+                            recompute_single(clsg_radius, param_dict_inverse[feature_parameter])
                         else:
-                            recompute_single(clsg, feature_parameter, gap=feature_parameter[5:])
+                            recompute_single(clsg, param_dict_inverse[feature_parameter], gap=feature_parameter[5:])
                     elif feature_parameter[:4] == "blsg":
                         if feature_parameter.count('_') == 2:
                             if feature_parameter[14:] == 'radius':
-                                recompute_single(blsg_radius, feature_parameter, reverse_flow=True)
+                                recompute_single(blsg_radius, param_dict_inverse[feature_parameter], reverse_flow=True)
                             else:
-                                recompute_single(blsg, feature_parameter, reverse_flow=True, gap=feature_parameter[14:])
+                                recompute_single(blsg, param_dict_inverse[feature_parameter], reverse_flow=True, gap=feature_parameter[14:])
                         else:
                             if feature_parameter[5:] == 'radius':
-                                recompute_single(blsg_radius, feature_parameter)
+                                recompute_single(blsg_radius, param_dict_inverse[feature_parameter])
                             else:
-                                recompute_single(blsg, feature_parameter, gap=feature_parameter[5:])
+                                recompute_single(blsg, param_dict_inverse[feature_parameter], gap=feature_parameter[5:])
                     elif feature_parameter == "nbc":
-                        recompute_single(nbc, feature_parameter)
+                        recompute_single(nbc, param_dict_inverse[feature_parameter])
                     elif feature_parameter[:2] == "dc":
-                        recompute_single(dc, feature_parameter, coeff_index=int(feature_parameter[2]))
+                        recompute_single(dc, param_dict_inverse[feature_parameter], coeff_index=int(feature_parameter[2]))
 
 
 # Load the computed parameters into a dataframe
-param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_names]
+param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_dict.keys()]
 df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
 defined['data']['df'] = 'mc2 parameters'
 

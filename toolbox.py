@@ -71,7 +71,7 @@ def recompute_single(function, name, **args):
 # Out: none (exports numpy array)
     data = []
     data_error = []
-    for chief in range(31346):
+    for chief in range(len(adj)):
         try:
             current_param = function(chief, **args)
             #current_param = function(tribe(chief), **args)
@@ -83,7 +83,7 @@ def recompute_single(function, name, **args):
         if chief%100 == 0:
             print('Computing vertex '+str(chief)+'. So far '+str(np.count_nonzero(np.array(data_error)))+' errors.',flush=True)
     error_count = np.count_nonzero(np.array(data_error))
-    print('Got '+str(error_count)+' errors ('+str(round(error_count/31346*100,2))+'%)', flush=True)
+    print('Got '+str(error_count)+' errors ('+str(round(error_count/len(adj)*100,2))+'%)', flush=True)
 
     # Check if previous array exists, backup if so
     cmd = subprocess.Popen(['ls',dir_export+'individual_parameters/'+name+'.npy'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
@@ -106,7 +106,7 @@ def random_values(value_type='float', value_min=0, value_max=1, name='random_flo
 # Out: none (exports numpy array)
     assert value_max > value_min, 'Range error: value_max must be larger than value_min'
     rng = np.random.default_rng()
-    raw_data = rng.random(31346)
+    raw_data = rng.random(len(adj))
     if value_type == 'float':
         data = raw_data*(value_max-value_min) + value_min
     elif value_type == 'int':

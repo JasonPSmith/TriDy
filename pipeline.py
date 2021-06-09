@@ -222,7 +222,7 @@ def classify():
         #pickle.dump(clf, model_file)
         #model_file.close()
 
-        np.save(savefolder + parameter + '_predictions.npy',predictions)
+        np.save(savefolder + parameter + '_predictions_'+feature_parameter+'.npy',predictions)
 
         output.write('CV accuracy: %0.2f +/- %0.2f,  test accuracy: %0.2f +/- %0.2f \n' % (cv_scores.mean(),cv_scores.std()*2,np.array(test_scores).mean(),np.array(test_scores).std()*2))
         print('Finished '+parameter+' classification')

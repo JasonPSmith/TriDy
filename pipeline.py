@@ -38,24 +38,24 @@ selection_order = config_dict['values']['selection_order']                # Must
 selection_ascending = (selection_order=='bottom')                         # Will be True or False
 
 # Optional config
-try: # Random3
-    new_tribes_for_chiefs = config_dict['random_tests']['new_tribes_for_chiefs']
-    if new_tribes_for_chiefs:
-        print('Random initiated: Giving chiefs new tribes by choosing random vertices', flush=True)
-except:
-    new_tribes_for_chiefs = False
-try: # Random4
-    permute_activity_data = config_dict['random_tests']['permute_activity_data']
-    if permute_activity_data:
-        print('Random initiated: permuting activity data', flush=True)
-except:
-    permute_activity_data = False
-try: # Random5
-    new_tribes_for_chiefs_var = config_dict['random_tests']['new_tribes_for_chiefs_var']
-    if new_tribes_for_chiefs_var:
-        print('Random initiated: Giving chiefs new tribes by moving around chiefs edges', flush=True)
-except:
-    new_tribes_for_chiefs_var = False
+# try: # Random3
+#     new_tribes_for_chiefs = config_dict['random_tests']['new_tribes_for_chiefs']
+#     if new_tribes_for_chiefs:
+#         print('Random initiated: Giving chiefs new tribes by choosing random vertices', flush=True)
+# except:
+#     new_tribes_for_chiefs = False
+# try: # Random4
+#     permute_activity_data = config_dict['random_tests']['permute_activity_data']
+#     if permute_activity_data:
+#         print('Random initiated: permuting activity data', flush=True)
+# except:
+#     permute_activity_data = False
+# try: # Random5
+#     new_tribes_for_chiefs_var = config_dict['random_tests']['new_tribes_for_chiefs_var']
+#     if new_tribes_for_chiefs_var:
+#         print('Random initiated: Giving chiefs new tribes by moving around chiefs edges', flush=True)
+# except:
+#     new_tribes_for_chiefs_var = False
 
 
 # Addresses
@@ -209,15 +209,20 @@ def classify():
         clf = clf_SVM
         cv_scores = cross_val_score(clf, X, y, cv=4)
         test_scores = []
+        predictions = {}
 
         for _ in range(test_repetitions):
             X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = train_set_perc)
-            test_scores.append(clf.fit(X_train,y_train).score(X_test,y_test))
+            predictions['real_values'+str(_)] = y_test
+            predictions['predictions'+str(_)] = clf.fit(X_train,y_train).predict(X_test)
+            test_scores.append(sum(y_test==predictions['predictions'+str(_)])/len(y_test))
 
         # Use this if you want to save the fitted model for later use, otherwise comment
         #model_file = open('nest_test/fitted_SVM.pkl', 'wb')
         #pickle.dump(clf, model_file)
         #model_file.close()
+
+        np.save(savefolder + parameter + '_predictions.npy',predictions)
 
         output.write('CV accuracy: %0.2f +/- %0.2f,  test accuracy: %0.2f +/- %0.2f \n' % (cv_scores.mean(),cv_scores.std()*2,np.array(test_scores).mean(),np.array(test_scores).std()*2))
         print('Finished '+parameter+' classification')

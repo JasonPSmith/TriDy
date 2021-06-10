@@ -536,7 +536,7 @@ defined['spectral_params']['asg'].append('asg_radius(chief_index)')
 def asg_radius(index):
 #  in: index
 # out: float
-    return spectral_gap(tribe(index),'radius')
+    return spectral_gap(tribe(index),param='radius')
 
 defined['spectral_params']['asg'].append('asg_adjacency(matrix, gap=\'high\')')
 def asg_adjacency(matrix, gap='high'):
@@ -557,7 +557,7 @@ defined['spectral_params']['tpsg'].append('tpsg_radius(chief_index, in_deg=False
 def tpsg_radius(index, in_deg=False):
 #  in: index
 # out: float
-    return spectral_gap(tps_matrix(tribe(index), in_deg=in_deg),'radius')
+    return spectral_gap(tps_matrix(tribe(index), in_deg=in_deg),param='radius')
 
 
 defined['spectral_params']['tpsg'].append('tpsg_adjacency(matrix, in_deg=False, gap=\'high\')')
@@ -596,7 +596,7 @@ defined['spectral_params']['clsg'].append('clsg_radius(chief_index)')
 def clsg_radius(index, gap='low'):
 #  in: index
 # out: float
-    return spectral_gap(cls_matrix_fromadjacency(tribe(index)),'radius')
+    return spectral_gap(cls_matrix_fromadjacency(tribe(index)),param='radius')
 
 defined['spectral_params']['clsg'].append('clsg_adjacency(matrix, is_strongly_conn=False, gap=\'low\')')
 def clsg_adjacency(matrix, is_strongly_conn=False, gap='low'):
@@ -651,7 +651,7 @@ defined['spectral_params']['blsg'].append('blsg_radius(chief_index, reverse_flow
 def blsg_radius(index, reverse_flow=False):
 #  in: index
 # out: float
-    return spectral_gap(bls_matrix(tribe(index),reverse_flow=reverse_flow),'radius')
+    return spectral_gap(bls_matrix(tribe(index),reverse_flow=reverse_flow),param='radius')
 
 defined['spectral_params']['blsg'].append('blsg_adjacency(matrix, reverse_flow=False, gap=\'high\')')
 def blsg_adjacency(matrix, reverse_flow=False, gap='high'):

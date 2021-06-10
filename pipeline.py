@@ -169,14 +169,14 @@ def featurization(parameter, matrix):
     nbhds = top_nbhds(parameter, number=number_nbhds, order_by_ascending=selection_ascending, matrix=current_matrix)
 
     # Random3 validation
-    if new_tribes_for_chiefs:
-        nbhds = new_nbhds(nbhds, len(matrix))
-
-    # Random5 validation
-    elif new_tribes_for_chiefs_var:
-        current_chiefs = top_chiefs(parameter, number=number_nbhds, order_by_ascending=selection_ascending)
-        current_matrix = permute_list_but_all(matrix,current_chiefs)
-        nbhds = top_nbhds(parameter, number=number_nbhds, order_by_ascending=selection_ascending, matrix=current_matrix)
+    # if new_tribes_for_chiefs:
+    #     nbhds = new_nbhds(nbhds, len(matrix))
+    #
+    # # Random5 validation
+    # elif new_tribes_for_chiefs_var:
+    #     current_chiefs = top_chiefs(parameter, number=number_nbhds, order_by_ascending=selection_ascending)
+    #     current_matrix = permute_list_but_all(matrix,current_chiefs)
+    #     nbhds = top_nbhds(parameter, number=number_nbhds, order_by_ascending=selection_ascending, matrix=current_matrix)
 
     features_and_labels = ConstructFeatureVector(parameter, nbhds, feature_tracker, current_matrix)
     np.save(savefolder + parameter + '_feature_vectors.npy',features_and_labels)

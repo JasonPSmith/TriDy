@@ -741,7 +741,7 @@ if config_dict['values']['recompute'] == "True":
 
 
 # Load the computed parameters into a dataframe
-param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy') for f in param_names]
+param_files = [np.load(dir_export+'individual_parameters/'+param_dict_inverse[f]+'.npy',allow_pickle=True) for f in param_names]
 df = pd.DataFrame(np.column_stack(tuple(param_files)), columns = param_names)
 defined['data']['df'] = 'mc2 parameters'
 

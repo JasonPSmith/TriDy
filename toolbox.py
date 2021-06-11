@@ -36,12 +36,12 @@ param_dict = {
     'dc2':'dc2', 'dc3':'dc3', 'dc4':'dc4', 'dc5':'dc5', 'dc6':'dc6',
     'nbc':'nbc','euler_characteristic':'ec',
     'tribe_size':'tribe_size', 'degree':'deg', 'in_degree':'in_deg', 'out_degree':'out_deg', 'reciprocal_connections':'rc', 'reciprocal_connections_chief':'rc_chief',
-    'asg_high':'asg', 'asg_low':'asg_low', 'asg_radius':'asg_radius',
-    'tpsg_high':'tpsg', 'tpsg_low':'tpsg_low', 'tpsg_radius':'tpsg_radius',
-    'tpsg_reversed_high':'tpsg_reversed', 'tpsg_reversed_low':'tpsg_reversed_low', 'tpsg_reversed_radius':'tpsg_reversed_radius',
-    'clsg_low':'clsg', 'clsg_high':'clsg_high', 'clsg_radius':'clsg_radius',
-    'blsg_high':'blsg', 'blsg_low':'blsg_low', 'blsg_radius':'blsg_radius',
-    'blsg_reversed_high':'blsg_reversed', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius',
+    'asg_high':'asg_high', 'asg_low':'asg_low', 'asg_radius':'asg_radius',
+    'tpsg_high':'tpsg_high', 'tpsg_low':'tpsg_low', 'tpsg_radius':'tpsg_radius',
+    'tpsg_reversed_high':'tpsg_reversed_high', 'tpsg_reversed_low':'tpsg_reversed_low', 'tpsg_reversed_radius':'tpsg_reversed_radius',
+    'clsg_low':'clsg_low', 'clsg_high':'clsg_high', 'clsg_radius':'clsg_radius',
+    'blsg_high':'blsg_high', 'blsg_low':'blsg_low', 'blsg_radius':'blsg_radius',
+    'blsg_reversed_high':'blsg_reversed_high', 'blsg_reversed_low':'blsg_reversed_low', 'blsg_reversed_radius':'blsg_reversed_radius',
 }
 # biedge_dict = {
 #     'biedges1t': 'biedges1t', 'biedges2t': 'biedges2t', 'biedges3t': 'biedges3t', 'biedges4t': 'biedges4t', 'biedges5t': 'biedges5t', 'biedges6t': 'biedges6t',

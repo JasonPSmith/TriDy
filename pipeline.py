@@ -123,8 +123,8 @@ def ConstructFeatureVector(parameter, nhbds, feature_tracker, matrix):
     all_zero = True
 
     # Random4 validation: Make a permutation vector if necessary
-    if permute_activity_data:
-        p = np.random.permutation(len(matrix))
+    #if permute_activity_data:
+    #    p = np.random.permutation(len(matrix))
 
     # nhbds_for_featurization contains active subnhbds in each time bin: first n positions are the n active subnhbds for the first timebin,
     # in descending order by the structural parameter. Then follows the n active subnhbds for the second timebin etc.
@@ -139,8 +139,8 @@ def ConstructFeatureVector(parameter, nhbds, feature_tracker, matrix):
                 spikers = (experiment[(experiment[:,0] > t*timebin+start_time) & (experiment[:,0] <= (t+1)*timebin+start_time)][:,1]-spike_gid_shift).astype(dtype=int)
 
                 # Random4 validation: Permute activity data
-                if permute_activity_data:
-                    spikers = tuple(map(lambda x: p[x], spikers))
+                #if permute_activity_data:
+                #    spikers = tuple(map(lambda x: p[x], spikers))
 
                 for nhbd in nhbds:
                     #nbhds_for_featurization.append(np.intersect1d(nhbd[0],spikers))

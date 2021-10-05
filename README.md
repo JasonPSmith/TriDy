@@ -1,7 +1,6 @@
 # TriDy
-**Tri**bal Classification of Binary **Dy**namics
 
-A pipeline for classifying binary dynamics on digraphs using tribes (or closed neighbourhoods), proposed in:
+A pipeline for classifying binary dynamics on digraphs using closed neighbourhoods, proposed in:
 
 [An application of neighbourhoods in digraphs to the classification of binary dynamics](https://arxiv.org/abs/2104.06519)
 

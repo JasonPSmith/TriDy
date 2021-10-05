@@ -1,4 +1,4 @@
-# TriDy
+# Tridy
 
 A pipeline for classifying binary dynamics on digraphs using closed neighbourhoods, proposed in:
 

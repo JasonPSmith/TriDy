@@ -4,7 +4,7 @@
     "timebin": 25,
     "train_set_perc": 0.6,
     "test_repetitions": 10,
-    "spike_gid_shift": 0,
+    "spike_gid_shift": 62693,
     "start_time" : 10,
     "bin_number" : 2,
     "feature_parameter": "tribe_size",

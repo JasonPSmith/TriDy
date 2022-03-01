@@ -12,7 +12,7 @@
 				"asg_high", "asg_low", "asg_radius", "tpsg_high", "tpsg_low", "tpsg_radius", "tpsg_reversed_high", "tpsg_reversed_low", "tpsg_reversed_radius",
 				"clsg_low", "clsg_high", "clsg_radius", "blsg_high", "blsg_low", "blsg_radius", "blsg_reversed_high", "blsg_reversed_low", "blsg_reversed_radius"],
     "feature_gap" : "high",
-    "selection_order" : "high",
+    "selection_order" : "top",
     "recompute" : "True"
   },
   "paths":{

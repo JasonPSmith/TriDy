@@ -19,7 +19,7 @@ with open(config_address, 'r') as f:
 
 # Load toolbox functions
 exec(open('toolbox.py').read())
-print("\nToolbox loaded")
+print("\nToolbox loaded", flush=True)
 
 # Config
 number_nbhds = config_dict['values']['number_nbhds']                      # The number of top neighboorhoods to consider
@@ -180,8 +180,8 @@ def featurization(parameter, matrix):
 
     features_and_labels = ConstructFeatureVector(parameter, nbhds, feature_tracker, current_matrix)
     np.save(savefolder + parameter + '_feature_vectors.npy',features_and_labels)
-    print('Finished '+ parameter)
-    print('Feature computation failed for '+str(feature_tracker[0])+' out of '+str(feature_tracker[1]))
+    print('Finished '+ parameter, flush=True)
+    print('Feature computation failed for '+str(feature_tracker[0])+' out of '+str(feature_tracker[1]), flush=True)
 
 # Does the classification, requires the featurisation to be done first separately
 def classify():
@@ -224,8 +224,8 @@ def classify():
 
         np.save(savefolder + parameter + '_predictions_'+feature_parameter+'.npy',predictions)
 
-        output.write('CV accuracy: %0.2f +/- %0.2f,  test accuracy: %0.2f +/- %0.2f \n' % (cv_scores.mean(),cv_scores.std()*2,np.array(test_scores).mean(),np.array(test_scores).std()*2))
-        print('Finished '+parameter+' classification')
+        output.write('cv %0.3f %0.3f test %0.3f %0.3f \n' % (cv_scores.mean(),cv_scores.std()*2,np.array(test_scores).mean(),np.array(test_scores).std()*2))
+        print('Finished '+parameter+' classification', flush=True)
 
         output.write('\n')
 
@@ -240,7 +240,7 @@ if __name__ == '__main__':
         else:
             print('Feature vectors for parameter '+i+' already exist, skipping',flush=True)
 
-    print("Featurisation Complete")
-    print("Starting Classification")
+    print("Featurisation Complete", flush=True)
+    print("Starting Classification", flush=True)
     classify()
-    print("Classification Complete")
+    print("Classification Complete", flush=True)

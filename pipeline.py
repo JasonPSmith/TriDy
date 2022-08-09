@@ -91,7 +91,7 @@ def computeFeature(nhbds_for_featurization, contains_chief, feature_tracker, mat
             elif feature_parameter == "ccc":
                 x = ccc_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])])
             elif feature_parameter == "asg":
-                x = asg_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])])
+                x = asg_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], gap=feature_gap)
             elif feature_parameter == "tpsg":
                 x = tpsg_adjacency(matrix[np.ix_(nhbds_for_featurization[i],nhbds_for_featurization[i])], gap=feature_gap)
             elif feature_parameter == "tpsg_reversed":

@@ -489,7 +489,7 @@ def in_degree(chief_index, vertex_index=0):
 
 defined['nonspectral_params']['degree'].append('in_degree_adjacency(matrix, vertex_index=0)')
 def in_degree_adjacency(matrix, vertex_index=0):
-    return np.count_nonzero(matrix[vertex_index])
+    return np.count_nonzero(np.transpose(matrix)[vertex_index])
 
 
 # out-degree
@@ -500,7 +500,7 @@ def out_degree(chief_index, vertex_index=0):
 
 defined['nonspectral_params']['degree'].append('out_degree_adjacency(matrix, vertex_index=0)')
 def out_degree_adjacency(matrix, vertex_index=0):
-    return np.count_nonzero(np.transpose(matrix)[vertex_index])
+    return np.count_nonzero(matrix[vertex_index])
 
 
 # reciprocal connections

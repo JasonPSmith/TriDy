@@ -451,8 +451,8 @@ def normalised_simplex_count_adjacency(matrix, dim=2):
     if len(directed_cell_count) <= dim:
         return 0
     if undirected_cell_count[dim] == 0:
-        return 0
-        #return np.nan
+        #return 0
+        return np.nan
     return directed_cell_count[dim]/(undirected_cell_count[dim]*math.factorial(dim))
 
 

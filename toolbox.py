@@ -763,6 +763,8 @@ if config_dict['values']['recompute'] == "True":
                         recompute_single(nbc, param_dict_inverse[feature_parameter])
                     elif feature_parameter[:2] == "dc":
                         recompute_single(dc, param_dict_inverse[feature_parameter], coeff_index=int(feature_parameter[2]))
+                    elif feature_parameter[:nsc] == "nsc":
+                        recompute_single(normalised_simplex_count, param_dict_inverse[feature_parameter], coeff_index=int(feature_parameter[3]))
 
 
 # Load the computed parameters into a dataframe

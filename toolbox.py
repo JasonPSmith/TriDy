@@ -35,6 +35,7 @@ print('Loading parameters',flush=True)
 param_dict = {
     'tcc':'tcc', 'ccc':'ccc',
     'dc2':'dc2', 'dc3':'dc3', 'dc4':'dc4', 'dc5':'dc5', 'dc6':'dc6',
+    'nsc2':'nsc2', 'nsc3':'nsc3', 'nsc4':'nsc4', 'nsc5':'nsc5', 'nsc6':'nsc6',
     'nbc':'nbc','euler_characteristic':'ec',
     'tribe_size':'tribe_size', 'degree':'deg', 'in_degree':'in_deg', 'out_degree':'out_deg', 'reciprocal_connections':'rc', 'reciprocal_connections_chief':'rc_chief',
     'asg_high':'asg_high', 'asg_low':'asg_low', 'asg_radius':'asg_radius',

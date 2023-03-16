@@ -10,6 +10,7 @@ print('Loading packages',flush=True)
 import subprocess
 import os
 import time
+import math
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -428,6 +429,30 @@ def dc_adjacency(matrix, chief_index=0, coeff_index=2):
         else:
             density_coeff = numerator/denominator
     return density_coeff
+
+
+defined['nonspectral_params']['normalised_simplex_count']=[]
+
+defined['nonspectral_params']['normalised_simplex_count'].append('normalised_simplex_count(chief_index, dim=2)')
+def normalised_simplex_count(chief_index, dim=2):
+#  in: index
+# out: float
+    current_tribe = tribe(chief_index)
+    return normalised_simplex_count_adjacency(current_tribe, dim=dim)
+
+defined['nonspectral_params']['normalised_simplex_count'].append('normalised_simplex_count_adjacency(matrix, dim=2)')
+def normalised_simplex_count_adjacency(matrix, dim=2):
+#  in: tribe matrix
+# out: float
+    assert dim >= 1, 'Assertion error: Dim value must be at least 1'
+    directed_cell_count = pyflagser.flagser_unweighted(matrix, directed=True)['cell_count']
+    undirected_cell_count =  pyflagser.flagser_unweighted(matrix, directed=False)['cell_count']
+    if len(directed_cell_count) <= dim:
+        return 0
+    if undirected_cell_count[dim] == 0:
+        return 0
+        #return np.nan
+    return directed_cell_count[dim]/(undirected_cell_count[dim]*math.factorial(dim))
 
 
 # normalized betti coefficient

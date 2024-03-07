@@ -224,7 +224,13 @@ def classify():
 
         np.save(savefolder + parameter + '_predictions_'+feature_parameter+'.npy',predictions)
 
-        output.write('cv %0.3f %0.3f test %0.3f %0.3f \n' % (cv_scores.mean(),cv_scores.std()*2,np.array(test_scores).mean(),np.array(test_scores).std()*2))
+        # Counts nonzero entries in feature vectors
+        alldata = np.transpose(features)[:-1]
+        nonzerocount = np.count_nonzero(alldata)
+        totalcount = np.prod(alldata.shape)
+
+        # Write values to file
+        output.write(f"cv {cv_scores.mean():.3f} {cv_scores.std()*2:.3f} test {np.array(test_scores).mean():.3f} {np.array(test_scores).std()*2:.3f} nonzero {nonzerocount} of {totalcount} \n")
         print('Finished '+parameter+' classification', flush=True)
 
         output.write('\n')
